@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Link Not Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              body: ["Newsreader", "serif"]
+            },
+            colors: {
+              ink: "#0b0d10",
+              paper: "#f5f1e8",
+              acid: "#c8ff2e",
+              ember: "#ff5d3d",
+              cloud: "#b9c1cc"
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="bg-ink text-paper font-body">
+    <div class="page min-h-screen flex items-center justify-center px-6">
+      <div class="max-w-xl text-center space-y-6 reveal">
+        <p class="text-cloud uppercase tracking-[0.4em] text-xs">404</p>
+        <h1 class="font-display text-5xl sm:text-6xl">This link went dark.</h1>
+        <p class="text-paper/80 text-lg">
+          The redirect you were looking for does not exist, or it was never minted.
+        </p>
+        <a href="/" class="cta inline-flex items-center justify-center">Go home</a>
+      </div>
+    </div>
+  </body>
+</html>

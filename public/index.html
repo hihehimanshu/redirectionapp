@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirectionapp | Redis Redirects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              body: ["Newsreader", "serif"]
+            },
+            colors: {
+              ink: "#0b0d10",
+              steel: "#131821",
+              paper: "#f5f1e8",
+              acid: "#c8ff2e",
+              ember: "#ff5d3d",
+              cloud: "#b9c1cc"
+            },
+            boxShadow: {
+              hard: "0 30px 80px rgba(0,0,0,0.45)",
+              inset: "inset 0 0 0 2px rgba(255,255,255,0.12)"
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="bg-ink text-paper font-body">
+    <div class="page min-h-screen">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="glow glow-left"></div>
+        <div class="glow glow-right"></div>
+      </div>
+
+      <header class="px-6 pt-10 lg:px-16">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-cloud">
+            <span class="badge">Redis</span>
+            <span class="text-paper/70">Redirector Lab</span>
+          </div>
+          <div class="text-xs uppercase tracking-[0.35em] text-paper/60">v0.1 // bun + express</div>
+        </div>
+      </header>
+
+      <main class="px-6 pb-20 pt-12 lg:px-16">
+        <div class="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <section class="space-y-8 reveal">
+            <div>
+              <p class="text-cloud uppercase tracking-[0.4em] text-xs">Custom links, no fluff</p>
+              <h1 class="mt-4 font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.9]">
+                Forge a link
+                <span class="block text-acid">that remembers.</span>
+              </h1>
+              <div class="mt-6 hero-rail"></div>
+              <p class="mt-6 text-lg text-paper/80 max-w-xl">
+                Build short, branded redirects backed by Redis. Keep the memory fast, the slugs custom,
+                and the interface unapologetically bold.
+              </p>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-3">
+              <div class="stat">
+                <p class="stat-title">Latency</p>
+                <p class="stat-value">Redis-fast</p>
+              </div>
+              <div class="stat">
+                <p class="stat-title">Control</p>
+                <p class="stat-value">Custom slugs</p>
+              </div>
+              <div class="stat">
+                <p class="stat-title">Signal</p>
+                <p class="stat-value">Clean URLs</p>
+              </div>
+            </div>
+            <div class="info-panel">
+              <h2 class="font-display text-2xl">How it works</h2>
+              <ul class="mt-4 space-y-3 text-paper/80">
+                <li>1. Drop the destination URL.</li>
+                <li>2. Claim a short code that feels like yours.</li>
+                <li>3. Share the new link instantly.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="form-shell reveal delay-1">
+            <div class="form-header">
+              <h2 class="font-display text-2xl">Mint a redirect</h2>
+              <p class="text-paper/70 text-sm">Built for speed and brand recall.</p>
+            </div>
+
+            <form id="shorten-form" class="mt-8 space-y-6">
+              <div>
+                <label class="label" for="url">Destination URL</label>
+                <input
+                  class="input"
+                  id="url"
+                  name="url"
+                  type="url"
+                  placeholder="https://yourdomain.com/launch"
+                  required
+                />
+              </div>
+              <div>
+                <label class="label" for="slug">Custom slug (optional)</label>
+                <input
+                  class="input"
+                  id="slug"
+                  name="slug"
+                  type="text"
+                  placeholder="midnight"
+                  pattern="[a-zA-Z0-9_-]{3,40}"
+                />
+                <p class="hint">3-40 chars, letters, numbers, dashes, underscores.</p>
+              </div>
+
+              <button type="submit" class="cta" id="submit-btn">
+                <span>Seal the link</span>
+                <span class="cta-line"></span>
+              </button>
+            </form>
+
+            <div id="error" class="mt-6 text-sm text-ember hidden"></div>
+
+            <div id="result" class="result hidden">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.3em] text-cloud">Your redirect</p>
+                  <a id="short-url" class="result-link" href="#" target="_blank" rel="noopener"></a>
+                </div>
+                <button id="copy-btn" class="copy">Copy</button>
+              </div>
+              <p id="result-meta" class="text-xs text-paper/60 mt-3"></p>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="px-6 pb-10 lg:px-16">
+        <div class="max-w-6xl mx-auto text-xs uppercase tracking-[0.4em] text-paper/40">
+          Build. Redirect. Repeat.
+        </div>
+      </footer>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
