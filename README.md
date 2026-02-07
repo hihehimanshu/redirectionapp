@@ -34,3 +34,4 @@ http://localhost:3000
 ## API
 - `POST /api/shorten` body: `{ "url": "https://example.com", "slug": "custom" }`
 - `GET /:slug` redirects to the target
+- Query params on the short URL are forwarded to the destination URL and override destination params with the same key
