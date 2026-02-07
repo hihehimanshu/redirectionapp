@@ -50,6 +50,26 @@ async function reserveSlug(slug, url) {
   return result === "OK";
 }
 
+function mergeQueryIntoTarget(target, rawQuery = "") {
+  if (!rawQuery) {
+    return target;
+  }
+
+  try {
+    const targetUrl = new URL(target);
+    const incoming = new URLSearchParams(rawQuery);
+
+    // Incoming short-link params take precedence when keys overlap.
+    for (const [key, value] of incoming.entries()) {
+      targetUrl.searchParams.set(key, value);
+    }
+
+    return targetUrl.toString();
+  } catch {
+    return target;
+  }
+}
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
@@ -116,7 +136,10 @@ app.get("/:slug", async (req, res) => {
     return res.status(404).sendFile(path.join(__dirname, "..", "public", "404.html"));
   }
 
-  return res.redirect(302, target);
+  const rawQuery = req.originalUrl.includes("?") ? req.originalUrl.split("?").slice(1).join("?") : "";
+  const redirectUrl = mergeQueryIntoTarget(target, rawQuery);
+
+  return res.redirect(302, redirectUrl);
 });
 
 app.listen(PORT, () => {
